@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VolatilityFee Hook</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">UHI9 Hookathon · Reactive Network · Uniswap v4</p>
+          <h1>VolatilityFee Hook</h1>
+          <p class="tagline">Pool fees that price volatility risk correctly.</p>
+        </div>
+        <div class="hero-meter" aria-label="current fee tier">
+          <span id="heroFee">5 bps</span>
+          <small id="heroRegime">Calm regime</small>
+        </div>
+      </section>
+
+      <section class="layout">
+        <aside class="panel controls">
+          <div class="panel-title">
+            <h2>Market Path</h2>
+            <button id="resetBtn" class="icon-btn" title="Reset simulation"><i data-lucide="rotate-ccw"></i></button>
+          </div>
+
+          <label>
+            Base sqrtPrice
+            <input id="basePrice" type="range" min="0.7" max="1.4" step="0.01" value="1" />
+            <output id="basePriceOut">1.00x</output>
+          </label>
+
+          <label>
+            Shock size
+            <input id="shockSize" type="range" min="0" max="0.3" step="0.01" value="0.12" />
+            <output id="shockSizeOut">12%</output>
+          </label>
+
+          <label>
+            Stable swaps
+            <input id="stableSwaps" type="range" min="3" max="30" step="1" value="8" />
+            <output id="stableSwapsOut">8</output>
+          </label>
+
+          <div class="segmented" role="group" aria-label="market scenario">
+            <button class="scenario active" data-scenario="calm">Calm</button>
+            <button class="scenario" data-scenario="spike">Spike</button>
+            <button class="scenario" data-scenario="recovery">Recovery</button>
+          </div>
+
+          <button id="runBtn" class="primary"><i data-lucide="play"></i><span>Run Flow</span></button>
+        </aside>
+
+        <section class="panel chart-panel">
+          <div class="panel-title">
+            <h2>EWMA Fee Path</h2>
+            <div class="status-pill" id="statusPill">Ready</div>
+          </div>
+          <canvas id="feeChart" width="1040" height="420"></canvas>
+          <div class="legend">
+            <span><i class="swatch low"></i>5 bps</span>
+            <span><i class="swatch med"></i>30 bps</span>
+            <span><i class="swatch high"></i>100 bps</span>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="panel-title">
+            <h2>Reactive Proof</h2>
+            <button id="copyBtn" class="icon-btn" title="Copy txid ledger"><i data-lucide="copy"></i></button>
+          </div>
+          <div class="proof-grid">
+            <div><span>Origin event</span><strong>SwapPriceUpdate</strong></div>
+            <div><span>ReactVM math</span><strong>EWMA α = 0.10</strong></div>
+            <div><span>Callback</span><strong>updateFeeFromReactive</strong></div>
+            <div><span>Swap path cost</span><strong>single SLOAD</strong></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Phase</th>
+                <th>Proof artifact</th>
+              </tr>
+            </thead>
+            <tbody id="ledger"></tbody>
+          </table>
+        </section>
+
+        <section class="panel config-panel">
+          <div class="panel-title">
+            <h2>Deployment Inputs</h2>
+            <button id="loadEnvBtn" class="icon-btn" title="Load sample addresses"><i data-lucide="database"></i></button>
+          </div>
+          <div class="address-grid">
+            <label>Hook<input id="hookAddress" placeholder="0x..." /></label>
+            <label>RSC<input id="rscAddress" placeholder="0x..." /></label>
+            <label>PoolId<input id="poolId" placeholder="0x..." /></label>
+            <label>Network
+              <select id="network">
+                <option>base-sepolia</option>
+                <option>sepolia</option>
+                <option>unichain-sepolia</option>
+              </select>
+            </label>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
