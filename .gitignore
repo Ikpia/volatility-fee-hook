@@ -1,0 +1,16 @@
+.env
+out/
+cache/
+broadcast/
+lcov.info
+coverage/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.DS_Store
+
+# Local research/context checkout copied into this workspace.
+# Keep the top-level note committed, but do not vendor nested repositories.
+context/**
+!context/
+!context/README.md
