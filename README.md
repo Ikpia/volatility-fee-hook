@@ -144,11 +144,3 @@ frontend/index.html
 ```
 
 The judge UI lets users simulate calm, spike, and recovery price paths and watch the fee tier change through the same EWMA math used by the RSC.
-
-## Security Notes
-
-- Hook callbacks are restricted to PoolManager by `BaseHook`.
-- No return-delta flags are enabled.
-- Fee updates can only choose one of the configured tiers.
-- Reactive callback authorization uses both callback proxy and encoded RSC sender.
-- If RSC callbacks stop, swaps continue with the last stored fee.
